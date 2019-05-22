@@ -11,6 +11,6 @@ applications:
   - name: consul
     process_types:
     - web
-    command: consul
+    command: consul agent -dev
   routes:
   - route: app-using-consul.dev.cfdev.sh

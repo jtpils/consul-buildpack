@@ -9,8 +9,8 @@ applications:
   buildpacks:
   - consul_buildpack
   - ruby_buildpack
-  # sidecars:
-  # - name: consul
-  #   process_types:
-  #   - web
-  #   command: consul
+  sidecars:
+  - name: consul
+    process_types:
+    - web
+    command: consul agent -dev

@@ -12,9 +12,9 @@ class AppServer < Sinatra::Base
     "Hi, I'm an app with a consul agent sidecar!"
   end
 
-  get '/config' do
-    puts "Sending a request to the consul sidecar at localhost:#{ENV['CONFIG_SERVER_PORT']}/config/"
-    response = Typhoeus.get("localhost:#{ENV['CONFIG_SERVER_PORT']}/config/")
+  get '/members' do
+    puts "Sending a request to the consul sidecar at localhost:8500"
+    response = Typhoeus.get("localhost:8500/v1/agent/members")
     if response.body.size > 0
       puts "Received #{response.body} from the consul sidecar"
       STDOUT.flush

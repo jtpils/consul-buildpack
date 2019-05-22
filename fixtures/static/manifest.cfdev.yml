@@ -7,10 +7,10 @@ applications:
   buildpacks:
   - consul_buildpack
   - staticfile_buildpack
-  # sidecars:
-  # - name: consul
-  #   process_types:
-  #   - web
-  #   command: consul
+  sidecars:
+  - name: consul
+    process_types:
+    - web
+    command: consul agent -dev
   routes:
   - route: app-using-consul.dev.cfdev.sh

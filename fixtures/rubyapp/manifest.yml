@@ -13,4 +13,4 @@ applications:
   - name: consul
     process_types:
     - web
-    command: consul
+    command: consul agent -dev
