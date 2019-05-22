@@ -2,6 +2,8 @@ package supply
 
 import (
 	"io"
+	"os"
+	"path/filepath"
 
 	"github.com/cloudfoundry/libbuildpack"
 )
@@ -53,6 +55,10 @@ func (s *Supplier) Run() error {
 		return err
 	}
 
-	// consulPath := filepath.Join(s.Stager.DepDir(), "consul")
+	err = os.Rename(filepath.Join(s.Stager.DepDir(), "consul"), filepath.Join(s.Stager.DepDir(), "bin", "consul"))
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
