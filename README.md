@@ -14,10 +14,55 @@ Status:
 
 ## Demonstration
 
+Locally, run a `consul agent -server` node:
+
+```plain
+consul agent -advertise 10.144.0.34 -bind 0.0.0.0 -server -bootstrap -bootstrap-expect 1 -config-dir tmp/demo.consul.d -data-dir tmp/demo.consul-data.d
+```
+
 ```plain
 cf v3-create-app app-using-consul
 cf v3-apply-manifest -f fixtures/rubyapp/manifest.yml
 cf v3-push app-using-consul -p fixtures/rubyapp
+```
+
+```plain
+cf ssh app-using-consul
+/tmp/lifecycle/shell
+```
+
+```plain
+consul agent -node cfdev-$INSTANCE_GUID -config-dir .config.d/ -data-dir .consul-data.d/ -join host.cfdev.sh
+```
+
+Unfortunately, this fails.
+
+In the consul server logs we see:
+
+```plain
+    2019/05/23 08:27:23 [INFO] consul: member 'cfdev-5fbaaf3c-4d37-4be2-5019-6068' joined, marking health alive
+    2019/05/23 08:27:25 [INFO] memberlist: Suspect cfdev-5fbaaf3c-4d37-4be2-5019-6068 has failed, no acks received
+    2019/05/23 08:27:28 [INFO] memberlist: Suspect cfdev-5fbaaf3c-4d37-4be2-5019-6068 has failed, no acks received
+    2019/05/23 08:27:29 [INFO] memberlist: Marking cfdev-5fbaaf3c-4d37-4be2-5019-6068 as failed, suspect timeout reached (0 peer confirmations)
+```
+
+The consul client logs show:
+
+```plain
+    2019/05/22 22:27:23 [INFO] serf: EventMemberJoin: cfdev-5fbaaf3c-4d37-4be2-5019-6068 10.255.103.9
+    2019/05/22 22:27:23 [INFO] agent: Started DNS server 127.0.0.1:8600 (tcp)
+    2019/05/22 22:27:23 [INFO] agent: Started DNS server 127.0.0.1:8600 (udp)
+    2019/05/22 22:27:23 [INFO] agent: Started HTTP server on 127.0.0.1:8500 (tcp)
+    2019/05/22 22:27:23 [INFO] agent: (LAN) joining: [host.cfdev.sh]
+    2019/05/22 22:27:23 [INFO] serf: EventMemberJoin: starkair.gateway 10.144.0.34
+    2019/05/22 22:27:23 [INFO] agent: (LAN) joined: 1 Err: <nil>
+    2019/05/22 22:27:23 [INFO] agent: started state syncer
+    2019/05/22 22:27:23 [INFO] consul: adding server starkair.gateway (Addr: tcp/10.144.0.34:8300) (DC: dc1)
+    2019/05/22 22:27:23 [WARN] manager: No servers available
+    2019/05/22 22:27:23 [ERR] agent: failed to sync remote state: No known Consul servers
+    2019/05/22 22:27:24 [ERR] consul: "Catalog.NodeServices" RPC failed to server 10.144.0.34:8300: rpc error getting client: failed to get conn: dial tcp <nil>->10.144.0.34:8300: connect: connection refused
+    2019/05/22 22:27:24 [ERR] agent: failed to sync remote state: rpc error getting client: failed to get conn: dial tcp <nil>->10.144.0.34:8300: connect: connection refused
+    2019/05/22 22:27:25 [INFO] memberlist: Suspect starkair.gateway has failed, no acks received
 ```
 
 ## Buildpack User Documentation
