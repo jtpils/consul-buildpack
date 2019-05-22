@@ -1,0 +1,16 @@
+applications:
+- name: app-using-consul
+  instances: 1
+  memory: 128M
+  disk_quota: 512M
+  stack: cflinuxfs3
+  buildpacks:
+  - consul_buildpack
+  - staticfile_buildpack
+  # sidecars:
+  # - name: consul
+  #   process_types:
+  #   - web
+  #   command: consul
+  routes:
+  - route: app-using-consul.dev.cfdev.sh

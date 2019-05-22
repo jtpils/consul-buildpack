@@ -43,7 +43,16 @@ type Supplier struct {
 func (s *Supplier) Run() error {
 	s.Log.BeginStep("Supplying consul")
 
-	// TODO: Install any dependencies here...
+	consul, err := s.Manifest.DefaultVersion("consul")
+	if err != nil {
+		return err
+	}
+	s.Log.Info("Using consul version %s", consul.Version)
 
+	if err := s.Installer.InstallDependency(consul, s.Stager.DepDir()); err != nil {
+		return err
+	}
+
+	// consulPath := filepath.Join(s.Stager.DepDir(), "consul")
 	return nil
 }

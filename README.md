@@ -1,3 +1,13 @@
+# Buildpack for Consul agent as Sidecar
+
+## Demonstration
+
+```plain
+cf v3-create-app app-using-consul
+cf v3-apply-manifest -f fixtures/rubyapp/manifest.yml
+cf v3-push app-using-consul -p fixtures/rubyapp
+```
+
 ### Buildpack User Documentation
 
 ### Building the Buildpack
