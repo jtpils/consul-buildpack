@@ -8,6 +8,8 @@ Status:
 * [x] Installs `consul` in $PATH
 * [ ] Works in Windows containers
 * [x] Application's `manifest.yml` can run any arbitrary `consul agent ...` command or wrapper script
+* [ ] Demonstrate joining remote Consul cluster
+* [ ] Demonstrate joining remote Consul cluster on CFDev
 * [ ] Native support for joining existing Consul clusters
 * [ ] Configure CF app as a Consul service
 * [ ] Setup [Consul Connect](https://learn.hashicorp.com/consul/getting-started/connect) for proxied traffic to other Consul client apps
