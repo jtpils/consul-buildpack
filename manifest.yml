@@ -1,16 +1,21 @@
 ---
 language: consul
 default_versions:
-dependency_deprecation_dates:
+- name: consul
+  version: 1.5.0
+dependency_deprecation_dates: []
 dependencies:
+- name: consul
+  version: 1.5.0
+  uri: https://releases.hashicorp.com/consul/1.5.0/consul_1.5.0_linux_amd64.zip
+  sha256: 1399064050019db05d3378f757e058ec4426a917dd2d240336b51532065880b6
+  cf_stacks:
+  - cflinuxfs2
+  - cflinuxfs3
 
 include_files:
   - README.md
   - VERSION
-  - bin/detect
-  - bin/compile
   - bin/supply
-  - bin/finalize
-  - bin/release
   - manifest.yml
 pre_package: scripts/build.sh
