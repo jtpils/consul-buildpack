@@ -27,8 +27,8 @@ consul agent -server -bootstrap -bootstrap-expect 1  \
 
 ```plain
 cf v3-create-app app-using-consul
-cf v3-apply-manifest -f fixtures/rubyapp/manifest.yml
-cf v3-push app-using-consul -p fixtures/rubyapp
+cf v3-apply-manifest -f fixtures/static/manifest.yml
+cf v3-push app-using-consul -p fixtures/static
 ```
 
 ```plain
