@@ -19,9 +19,10 @@ Status:
 Locally, run a `consul agent -server` node:
 
 ```plain
+mkdir -p tmp/demo.consul-config.d
 consul agent -server -bootstrap -bootstrap-expect 1  \
     -advertise 10.144.0.34 -bind 0.0.0.0 \
-    -config-dir tmp/demo.consul.d -data-dir tmp/demo.consul-data.d
+    -config-dir tmp/demo.consul-config.d -data-dir tmp/demo.consul-data.d
 ```
 
 ```plain
@@ -36,10 +37,11 @@ cf ssh app-using-consul
 ```
 
 ```plain
+mkdir -p .consul-config.d/
 consul agent -bind 0.0.0.0 \
-     -join host.cfdev.sh \
+    -join host.cfdev.sh \
     -node cfdev-$INSTANCE_GUID \
-    -config-dir .config.d/ -data-dir .consul-data.d/
+    -config-dir .consul-config.d/ -data-dir .consul-data.d/
 ```
 
 Unfortunately, this fails.
